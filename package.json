@@ -1,9 +1,12 @@
 {
   "name": "atheneum",
-  "version": "0.0.0",
-  "private": true,
+  "auther": "Jason McAffee",
+  "version": "0.0.1",
+  "private": false,
+  "repository": "https://github.com/jasonmcaffee/atheneum",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "browserify src/js > public/javascripts/bundle.js"
   },
   "dependencies": {
     "express": "~4.9.0",
@@ -13,6 +16,18 @@
     "serve-favicon": "~2.1.3",
     "debug": "~2.0.0",
     "ejs": "~0.8.5",
-    "less-middleware": "1.0.x"
+    "less-middleware": "1.0.x",
+    "react-tools":"*",
+    "react":"*",
+    "browserify":"*",
+    "reactify":"*",
+    "uglify-js": "~2.4.15",
+    "envify": "^3.0.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
   }
 }

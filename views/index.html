@@ -7,8 +7,14 @@
   <body>
     <h1>{{= title }}</h1>
     <p>Welcome to {{=title}}</p>
+
+    <div id="page">loading...</div>
+
+    <!-- pre loaded json object -->
     <script type="text/javascript">
       var viewModel = {{- JSON.stringify(viewModel)}};
     </script>
+
+    <script src="/javascripts/bundle.js"></script>
   </body>
 </html>
