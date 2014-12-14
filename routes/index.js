@@ -25,7 +25,7 @@ musicItemRepository.getMusicItems(function(musicItems){
 router.get('/', function(req, res) {
   res.render('index.html', {
     viewModel: viewModel,
-    title: 'Antheneum'
+    title: 'Atheneum'
   });
 });
 

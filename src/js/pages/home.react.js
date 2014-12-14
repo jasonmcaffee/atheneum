@@ -1,4 +1,5 @@
 var React = require('react');
+var ArtistsTable = require('../components/ArtistTable.react');
 
 var Header = React.createClass({
 
@@ -7,9 +8,12 @@ var Header = React.createClass({
      */
     render: function() {
         return (
-            <header id="header">
-                <h1>Antheneum</h1>
-            </header>
+            <div>
+                <header id="header">
+                    <h1>Atheneum</h1>
+                </header>
+                <ArtistsTable artists={this.props.artists} />
+            </div>
         );
     }
 

@@ -1,7 +1,9 @@
 var React = require('react');
-var HomePage = require('./pages/home.react.js');
+var HomePage = require('./pages/Home.react.js');
+
+var artists = viewModel.viewModel.artists;
 
 React.render(
-    <HomePage />,
-    document.getElementById('page')
+    <HomePage artists = {artists}/>,
+    document.getElementById('pageContainer')
 );
