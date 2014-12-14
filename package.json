@@ -22,7 +22,8 @@
     "browserify":"*",
     "reactify":"*",
     "uglify-js": "~2.4.15",
-    "envify": "^3.0.0"
+    "envify": "^3.0.0",
+    "underscore":"*"
   },
   "browserify": {
     "transform": [

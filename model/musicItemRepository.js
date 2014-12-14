@@ -159,18 +159,6 @@ module.exports.musicItemRepository = {
 
 };//end musicItemRepositoryCache
 
-//
-//function musicItemRepository(filePath){
-//	//private members
-//	var _musicItems = new Array();
-//
-//	//public members
-//	return {
-//
-//	};
-//
-//}
-
 function log(message){
 
     console.log(message)

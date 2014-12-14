@@ -1,4 +1,5 @@
 var React = require('react');
+var musicPlayer = require('../model/MusicPlayer.js');
 
 var ArtistTable = React.createClass({
     //getInitialState: function(){
@@ -42,13 +43,12 @@ var ArtistTable = React.createClass({
      * @returns {XML}
      */
     createArtistRow:function(artist, artistName, index) {
-        var id = "artist_" + index,
-            albumRows = null;
+        var albumRows = null;
         if(artist.expanded){
             albumRows = this.createAlbumRows(artist);
         }
         var row =
-            <div id={id} class="artist">
+            <div class="artist">
                 <h2 onClick={this.handleArtistClick.bind(this, artist)}>{artistName}</h2>
                 {albumRows}
             </div>;
@@ -61,7 +61,6 @@ var ArtistTable = React.createClass({
      * @param x
      */
     handleArtistClick:function(artist, x){
-        console.log('artist is:');
         artist.expanded = !artist.expanded;
         this.setState();
     },
@@ -88,15 +87,22 @@ var ArtistTable = React.createClass({
      * @returns {*}
      */
     createAlbumRow: function(album, albumName){
-        var songRows = this.createSongRows(album);
+        var songRows = null;
+        if(album.expanded){
+            songRows = this.createSongRows(album);
+        }
         var row =
             <div class="album">
-                <h3>{albumName}</h3>
+                <h3 onClick={this.handleAlbumClick.bind(this, album)}>{albumName}</h3>
                 {songRows}
             </div>;
         return row;
     },
 
+    handleAlbumClick: function(album, e){
+        album.expanded = !album.expanded;
+        this.setState();
+    },
     /**
      *
      * @param album
@@ -118,8 +124,17 @@ var ArtistTable = React.createClass({
      * @returns {XML}
      */
     createSongRow: function(song){
-        var row = <div class="song">{song.songName}</div>;
+        var row = <div class="song" onClick={this.handleSongClick.bind(this, song.id)}>{song.songName}</div>;
         return row;
+    },
+
+    /**
+     *
+     * @param songId
+     * @param e
+     */
+    handleSongClick: function(songId, e){
+        musicPlayer.playSong(songId);
     }
 });
 
