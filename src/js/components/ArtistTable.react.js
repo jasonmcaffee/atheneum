@@ -1,6 +1,10 @@
 var React = require('react');
 
 var ArtistTable = React.createClass({
+    //getInitialState: function(){
+    //    //this.props.artists.air.albums['1998 moon safari'].expanded = true;
+    //    return shownAlbum;
+    //},
     /**
      *
      * @returns {XML}
@@ -38,14 +42,28 @@ var ArtistTable = React.createClass({
      * @returns {XML}
      */
     createArtistRow:function(artist, artistName, index) {
-        var id = "artist_" + index;
-        var albumRows = this.createAlbumRows(artist);
+        var id = "artist_" + index,
+            albumRows = null;
+        if(artist.expanded){
+            albumRows = this.createAlbumRows(artist);
+        }
         var row =
             <div id={id} class="artist">
-                <h2>{artistName}</h2>
+                <h2 onClick={this.handleArtistClick.bind(this, artist)}>{artistName}</h2>
                 {albumRows}
             </div>;
         return row;
+    },
+
+    /**
+     *
+     * @param artist
+     * @param x
+     */
+    handleArtistClick:function(artist, x){
+        console.log('artist is:');
+        artist.expanded = !artist.expanded;
+        this.setState();
     },
 
     /**
