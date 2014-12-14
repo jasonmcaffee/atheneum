@@ -37,9 +37,70 @@ var ArtistTable = React.createClass({
      * @param index
      * @returns {XML}
      */
-    createArtistRow:function(artist, artistName, index){
+    createArtistRow:function(artist, artistName, index) {
         var id = "artist_" + index;
-        var row = <div id={id}>{artistName}</div>;
+        var albumRows = this.createAlbumRows(artist);
+        var row =
+            <div id={id} class="artist">
+                <h2>{artistName}</h2>
+                {albumRows}
+            </div>;
+        return row;
+    },
+
+    /**
+     *
+     * @param artist
+     * @returns {Array}
+     */
+    createAlbumRows:function(artist){
+        var rows = [];
+        for (var albumName in artist.albums){
+            var album = artist.albums[albumName];
+            var albumRow = this.createAlbumRow(album, albumName);
+            rows.push(albumRow);
+        }
+        return rows;
+    },
+
+    /**
+     *
+     * @param album
+     * @param albumName
+     * @returns {*}
+     */
+    createAlbumRow: function(album, albumName){
+        var songRows = this.createSongRows(album);
+        var row =
+            <div class="album">
+                <h3>{albumName}</h3>
+                {songRows}
+            </div>;
+        return row;
+    },
+
+    /**
+     *
+     * @param album
+     * @returns {Array}
+     */
+    createSongRows: function(album){
+        var rows = [];
+        for(var i=0; i < album.songs.length; ++i){
+            var song = album.songs[i];
+            var songRow = this.createSongRow(song);
+            rows.push(songRow);
+        }
+        return rows;
+    },
+
+    /**
+     *
+     * @param song
+     * @returns {XML}
+     */
+    createSongRow: function(song){
+        var row = <div class="song">{song.songName}</div>;
         return row;
     }
 });

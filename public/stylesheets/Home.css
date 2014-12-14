@@ -1,6 +1,15 @@
 .artists {
   color: blue;
 }
+.artist {
+  color: brown;
+}
+.album {
+  color: #00B7FF;
+}
+.song {
+  color: cornflowerblue;
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;

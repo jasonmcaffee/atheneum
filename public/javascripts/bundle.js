@@ -18246,9 +18246,77 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
         return rows;
     },
 
-    createArtistRow:function(artist, artistName, index){
+    /**
+     *
+     * @param artist
+     * @param artistName
+     * @param index
+     * @returns {XML}
+     */
+    createArtistRow:function(artist, artistName, index) {
         var id = "artist_" + index;
-        var row = React.createElement("div", {id: id}, artistName);
+        var albumRows = this.createAlbumRows(artist);
+        var row =
+            React.createElement("div", {id: id, class: "artist"}, 
+                React.createElement("h2", null, artistName), 
+                albumRows
+            );
+        return row;
+    },
+
+    /**
+     *
+     * @param artist
+     * @returns {Array}
+     */
+    createAlbumRows:function(artist){
+        var rows = [];
+        for (var albumName in artist.albums){
+            var album = artist.albums[albumName];
+            var albumRow = this.createAlbumRow(album, albumName);
+            rows.push(albumRow);
+        }
+        return rows;
+    },
+
+    /**
+     *
+     * @param album
+     * @param albumName
+     * @returns {*}
+     */
+    createAlbumRow: function(album, albumName){
+        var songRows = this.createSongRows(album);
+        var row =
+            React.createElement("div", {class: "album"}, 
+                React.createElement("h3", null, albumName), 
+                songRows
+            );
+        return row;
+    },
+
+    /**
+     *
+     * @param album
+     * @returns {Array}
+     */
+    createSongRows: function(album){
+        var rows = [];
+        for(var i=0; i < album.songs.length; ++i){
+            var song = album.songs[i];
+            var songRow = this.createSongRow(song);
+            rows.push(songRow);
+        }
+        return rows;
+    },
+
+    /**
+     *
+     * @param song
+     * @returns {XML}
+     */
+    createSongRow: function(song){
+        var row = React.createElement("div", {class: "song"}, song.songName);
         return row;
     }
 });
