@@ -149,6 +149,9 @@ ul {
 .player-controls {
   background-color: #00B7FF;
 }
+.player-controls ul li {
+  display: inline-block;
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;

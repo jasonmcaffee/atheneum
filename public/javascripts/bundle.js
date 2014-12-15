@@ -18230,7 +18230,7 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
     render:function(){
         var rows = this.createArtistRows(this.props.artistsModel.getDisplayedArtists());
         return(
-            React.createElement("div", {class: "artists"}, 
+            React.createElement("div", {className: "artists"}, 
             rows
             )
         );
@@ -18265,7 +18265,7 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
             albumRows = this.createAlbumRows(artist);
         }
         var row =
-            React.createElement("div", {class: "artist"}, 
+            React.createElement("div", {className: "artist"}, 
                 React.createElement("h2", {onClick: this.handleArtistClick.bind(this, artist)}, artistName), 
                 albumRows
             );
@@ -18309,7 +18309,7 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
             songRows = this.createSongRows(album);
         }
         var row =
-            React.createElement("div", {class: "album"}, 
+            React.createElement("div", {className: "album"}, 
                 React.createElement("h3", {onClick: this.handleAlbumClick.bind(this, album)}, albumName), 
                 songRows
             );
@@ -18318,7 +18318,7 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
 
     handleAlbumClick: function(album, e){
         album.expanded = !album.expanded;
-        this.setState();
+        this.forceUpdate();
     },
     /**
      *
@@ -18341,7 +18341,7 @@ var ArtistTable = React.createClass({displayName: 'ArtistTable',
      * @returns {XML}
      */
     createSongRow: function(song){
-        var row = React.createElement("div", {class: "song", onClick: this.handleSongClick.bind(this, song.id)}, song.songName);
+        var row = React.createElement("div", {className: "song", onClick: this.handleSongClick.bind(this, song.id)}, song.songName);
         return row;
     },
 
@@ -18362,13 +18362,26 @@ var musicPlayer = require('../model/MusicPlayer.js');
 
 var PlayerControls = React.createClass({displayName: 'PlayerControls',
     render:function(){
+        var currentSong = musicPlayer.currentSongInfo;
+        var currentSongInfo = null;
+        if(currentSong){
+            currentSongInfo =
+            React.createElement("div", {className: "current-song-info"}, 
+                React.createElement("ul", null, 
+                    React.createElement("li", null, currentSong.artistName), 
+                    React.createElement("li", null, currentSong.albumName), 
+                    React.createElement("li", null, currentSong.songName)
+                )
+            );
+        }
         return (
-            React.createElement("div", {class: "player-controls"}, 
+            React.createElement("div", {className: "player-controls"}, 
                 React.createElement("ul", null, 
                     React.createElement("li", {onClick: this.handlePlayClick}, "Play/Pause"), 
-                    React.createElement("li", null, "Previous"), 
-                    React.createElement("li", null, "Next")
-                )
+                    React.createElement("li", {onClick: this.handlePreviousClick}, "Previous"), 
+                    React.createElement("li", {onClick: this.handleNextClick}, "Next")
+                ), 
+                currentSongInfo
             )
         )
     },
@@ -18378,12 +18391,15 @@ var PlayerControls = React.createClass({displayName: 'PlayerControls',
         } else{
             musicPlayer.unPauseSong();
         }
+        this.forceUpdate();
     },
     handlePreviousClick:function(){
         musicPlayer.playPreviousSong();
+        this.forceUpdate();
     },
     handleNextClick:function(){
         musicPlayer.playNextSong();
+        this.forceUpdate();
     }
 
 });

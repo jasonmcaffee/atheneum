@@ -3,13 +3,26 @@ var musicPlayer = require('../model/MusicPlayer.js');
 
 var PlayerControls = React.createClass({
     render:function(){
+        var currentSong = musicPlayer.currentSongInfo;
+        var currentSongInfo = null;
+        if(currentSong){
+            currentSongInfo =
+            <div className="current-song-info">
+                <ul>
+                    <li>{currentSong.artistName}</li>
+                    <li>{currentSong.albumName}</li>
+                    <li>{currentSong.songName}</li>
+                </ul>
+            </div>;
+        }
         return (
-            <div class="player-controls">
+            <div className="player-controls">
                 <ul>
                     <li onClick={this.handlePlayClick}>Play/Pause</li>
-                    <li>Previous</li>
-                    <li>Next</li>
+                    <li onClick={this.handlePreviousClick}>Previous</li>
+                    <li onClick={this.handleNextClick}>Next</li>
                 </ul>
+                {currentSongInfo}
             </div>
         )
     },
@@ -19,12 +32,15 @@ var PlayerControls = React.createClass({
         } else{
             musicPlayer.unPauseSong();
         }
+        this.forceUpdate();
     },
     handlePreviousClick:function(){
         musicPlayer.playPreviousSong();
+        this.forceUpdate();
     },
     handleNextClick:function(){
         musicPlayer.playNextSong();
+        this.forceUpdate();
     }
 
 });

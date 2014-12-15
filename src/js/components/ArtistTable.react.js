@@ -13,7 +13,7 @@ var ArtistTable = React.createClass({
     render:function(){
         var rows = this.createArtistRows(this.props.artistsModel.getDisplayedArtists());
         return(
-            <div class="artists">
+            <div className="artists">
             {rows}
             </div>
         );
@@ -48,7 +48,7 @@ var ArtistTable = React.createClass({
             albumRows = this.createAlbumRows(artist);
         }
         var row =
-            <div class="artist">
+            <div className="artist">
                 <h2 onClick={this.handleArtistClick.bind(this, artist)}>{artistName}</h2>
                 {albumRows}
             </div>;
@@ -92,7 +92,7 @@ var ArtistTable = React.createClass({
             songRows = this.createSongRows(album);
         }
         var row =
-            <div class="album">
+            <div className="album">
                 <h3 onClick={this.handleAlbumClick.bind(this, album)}>{albumName}</h3>
                 {songRows}
             </div>;
@@ -101,7 +101,7 @@ var ArtistTable = React.createClass({
 
     handleAlbumClick: function(album, e){
         album.expanded = !album.expanded;
-        this.setState();
+        this.forceUpdate();
     },
     /**
      *
@@ -124,7 +124,7 @@ var ArtistTable = React.createClass({
      * @returns {XML}
      */
     createSongRow: function(song){
-        var row = <div class="song" onClick={this.handleSongClick.bind(this, song.id)}>{song.songName}</div>;
+        var row = <div className="song" onClick={this.handleSongClick.bind(this, song.id)}>{song.songName}</div>;
         return row;
     },
 
