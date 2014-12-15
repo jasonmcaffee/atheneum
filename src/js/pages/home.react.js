@@ -1,5 +1,6 @@
 var React = require('react');
 var ArtistsTable = require('../components/ArtistTable.react');
+var PlayerControls = require('../components/PlayerControls.react');
 
 var Header = React.createClass({
 
@@ -10,9 +11,9 @@ var Header = React.createClass({
         return (
             <div>
                 <header id="header">
-                    <h1>Atheneum</h1>
+                    <PlayerControls />
                 </header>
-                <ArtistsTable artists={this.props.artists} />
+                <ArtistsTable artistsModel={this.props.artistsModel} />
             </div>
         );
     }

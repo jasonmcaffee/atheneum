@@ -1,9 +1,9 @@
-var React = require('react');
-var HomePage = require('./pages/Home.react.js');
 
-var artists = viewModel.viewModel.artists;
+var fastButton = require('./core/FastButton');
+var homeController = require('./controllers/Home');
 
-React.render(
-    <HomePage artists = {artists}/>,
-    document.getElementById('pageContainer')
-);
+
+fastButton.init();
+
+homeController.action();
+

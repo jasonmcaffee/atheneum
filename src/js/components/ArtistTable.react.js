@@ -11,7 +11,7 @@ var ArtistTable = React.createClass({
      * @returns {XML}
      */
     render:function(){
-        var rows = this.createArtistRows(this.props.artists);
+        var rows = this.createArtistRows(this.props.artistsModel.getDisplayedArtists());
         return(
             <div class="artists">
             {rows}
@@ -62,7 +62,7 @@ var ArtistTable = React.createClass({
      */
     handleArtistClick:function(artist, x){
         artist.expanded = !artist.expanded;
-        this.setState();
+        this.forceUpdate();
     },
 
     /**

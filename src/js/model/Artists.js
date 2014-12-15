@@ -1,6 +1,14 @@
-var artistsModel = {
-    allArtists: viewModel.artists,
+var $ = require('../vendor/jquery');
 
+function ArtistsModel(artists){
+    this.artists = artists;
+}
+
+$.extend(ArtistsModel.prototype, {
+
+    getDisplayedArtists:function(){
+      return this.artists;
+    },
     /**
      * Searches through all artists and
      * creates an object representing below structure based on songId:
@@ -36,6 +44,6 @@ var artistsModel = {
         }
     }
 
-};
+});
 
-module.exports = artistsModel;
+module.exports = ArtistsModel;

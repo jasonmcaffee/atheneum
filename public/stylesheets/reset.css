@@ -1,15 +1,3 @@
-.artists {
-  color: blue;
-}
-.artist {
-  color: brown;
-}
-.album {
-  color: #00B7FF;
-}
-.song {
-  color: cornflowerblue;
-}
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
@@ -145,14 +133,4 @@ table {
 }
 ul {
   list-style: none;
-}
-.player-controls {
-  background-color: #00B7FF;
-}
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-a {
-  color: #00B7FF;
 }
