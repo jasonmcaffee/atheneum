@@ -1,7 +1,8 @@
 var React = require('react');
+var V = require('../core/viewFactory');
 var musicPlayer = require('../model/MusicPlayer.js');
 
-var ArtistTable = React.createClass({
+var ArtistTable = V({
     //getInitialState: function(){
     //    //this.props.artists.air.albums['1998 moon safari'].expanded = true;
     //    return shownAlbum;
@@ -135,6 +136,7 @@ var ArtistTable = React.createClass({
      */
     handleSongClick: function(songId, e){
         musicPlayer.playSong(songId);
+        this.props.signal.trigger("songPlayed");
     }
 });
 

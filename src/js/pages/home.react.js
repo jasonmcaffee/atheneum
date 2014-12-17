@@ -1,8 +1,9 @@
 var React = require('react');
 var ArtistsTable = require('../components/ArtistTable.react');
 var PlayerControls = require('../components/PlayerControls.react');
+var V = require('../core/viewFactory');
 
-var Header = React.createClass({
+var Home = V({
 
     /**
      * @return {object}
@@ -11,13 +12,13 @@ var Header = React.createClass({
         return (
             <div>
                 <header id="header">
-                    <PlayerControls />
+                    <PlayerControls signal={this.props.signal}/>
                 </header>
-                <ArtistsTable artistsModel={this.props.artistsModel} />
+                <ArtistsTable artistsModel={this.props.artistsModel} signal={this.props.signal} />
             </div>
         );
     }
 
 });
 
-module.exports = Header;
+module.exports = Home;

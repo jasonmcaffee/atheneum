@@ -1,7 +1,12 @@
 var React = require('react');
 var musicPlayer = require('../model/MusicPlayer.js');
-
-var PlayerControls = React.createClass({
+var V = require('../core/viewFactory');
+var PlayerControls = V({
+    signals:{
+        "songPlayed":function(songInfo){
+            this.forceUpdate();
+        }
+    },
     render:function(){
         var currentSong = musicPlayer.currentSongInfo;
         var currentSongInfo = null;
