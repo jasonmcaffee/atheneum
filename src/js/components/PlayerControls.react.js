@@ -3,7 +3,7 @@ var musicPlayer = require('model/MusicPlayer');
 var V = require('core/viewFactory');
 var PlayerControls = V({
     signals:{
-        "songPlayed":function(songInfo){
+        "musicPlayer:play":function(songInfo){
             this.forceUpdate();
         }
     },

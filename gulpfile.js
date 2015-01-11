@@ -108,7 +108,7 @@ function buildApp(){
     return bundler
         .bundle()
         .pipe(source('bundle.js'))//the generated file name
-        .pipe(gStreamify(uglify(buildConfig.uglify)))
+        //.pipe(gStreamify(uglify(buildConfig.uglify)))
         .pipe(gulp.dest(buildConfig.jsDistDir));//where to put the generated file name
 }
 gulp.task("build:js", buildApp);
@@ -129,7 +129,7 @@ gulp.task('build:css', function () {
  * Watch tasks so you don't have to manually build each time you change a file
  */
 gulp.task('watch:js', function(){
-    gulp.watch(buildConfig.jsBaseDir + '/**/*.js*', ['build:core-and-ui-components-app']);
+    gulp.watch(buildConfig.jsBaseDir + '/**/*.js*', ['build:js']);
 });
 gulp.task('watch:less', function(){
     gulp.watch(buildConfig.lessBaseDir + '/**/*.less', ['build:core-css', 'build:pattern-library-css']);

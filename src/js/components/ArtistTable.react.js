@@ -2,7 +2,7 @@
 //var V = require('../core/viewFactory');
 //var musicPlayer = require('../model/MusicPlayer.js');
 
-define(['react', 'core/viewFactory', 'model/MusicPlayer'], function(React, V, musicPlayer){
+define(['react', 'core/viewFactory', 'model/MusicPlayer', 'core/dispatcher'], function(React, V, musicPlayer, dispatcher){
     var ArtistTable = V({
         //getInitialState: function(){
         //    //this.props.artists.air.albums['1998 moon safari'].expanded = true;
@@ -16,7 +16,7 @@ define(['react', 'core/viewFactory', 'model/MusicPlayer'], function(React, V, mu
             var rows = this.createArtistRows(this.props.artistsModel.getDisplayedArtists());
             return(
                 <div className="artists">
-            {rows}
+                {rows}
                 </div>
             );
         },
@@ -137,7 +137,8 @@ define(['react', 'core/viewFactory', 'model/MusicPlayer'], function(React, V, mu
          */
         handleSongClick: function(songId, e){
             musicPlayer.playSong(songId);
-            this.props.signal.trigger("songPlayed");
+            //this.props.signal.trigger("songPlayed");
+            //dispatcher.trigger("songPlayed");
         }
     });
     return ArtistTable;

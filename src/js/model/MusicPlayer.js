@@ -1,5 +1,6 @@
 var ArtistsModel = require('model/Artists');
 var artistsModel = new ArtistsModel(viewModel.viewModel.artists);
+var dispatcher = require('core/dispatcher');
 /**
  * API for playing and manipulating songs/music.
  * Responsibilities include:
@@ -9,11 +10,11 @@ var artistsModel = new ArtistsModel(viewModel.viewModel.artists);
  */
 function MusicPlayer(){
     this.currentSong = undefined;
-    this.onPlayListeners = [];
-    this.onStopListeners = [];
-    this.onMetadataListeners = [];
-    this.onProgressListeners = [];
-    this.onTimeUpdateListeners = [];
+    //this.onPlayListeners = [];
+    //this.onStopListeners = [];
+    //this.onMetadataListeners = [];
+    //this.onProgressListeners = [];
+    //this.onTimeUpdateListeners = [];
     this.isSongCurrentlyPlaying = false;
     this.currentSongId = 0;
 }
@@ -134,57 +135,41 @@ MusicPlayer.prototype.getDuration = function(){
     return displayMinutes + ':' + displaySeconds;
 };
 
-/**
- * Register observers
- * @param playCallback
- */
-MusicPlayer.prototype.onPlay = function(playCallback) {
-    this.onPlayListeners.push(playCallback);
-
-};
-MusicPlayer.prototype.onStop = function(stopCallback) {
-    this.onStopListeners.push(stopCallback);
-};
-
-MusicPlayer.prototype.onMetadata = function(callback){
-    this.onMetadataListeners.push(callback);
-};
-
-MusicPlayer.prototype.onProgress = function(callback){
-    this.onProgressListeners.push(callback);
-};
-
-MusicPlayer.prototype.onTimeUpdate = function(callback){
-    this.onTimeUpdateListeners.push(callback);
-};
+///**
+// * Register observers
+// * @param playCallback
+// */
+//MusicPlayer.prototype.onPlay = function(playCallback) {
+//    this.onPlayListeners.push(playCallback);
+//
+//};
+//MusicPlayer.prototype.onStop = function(stopCallback) {
+//    this.onStopListeners.push(stopCallback);
+//};
+//
+//MusicPlayer.prototype.onMetadata = function(callback){
+//    this.onMetadataListeners.push(callback);
+//};
+//
+//MusicPlayer.prototype.onProgress = function(callback){
+//    this.onProgressListeners.push(callback);
+//};
+//
+//MusicPlayer.prototype.onTimeUpdate = function(callback){
+//    this.onTimeUpdateListeners.push(callback);
+//};
 
 MusicPlayer.prototype.notifyPlayListeners = function(){
-    for(var i=0; i < this.onPlayListeners.length; ++i){
-        var listener = this.onPlayListeners[i];
-        if(typeof listener === 'function'){
-            listener(this.currentSongInfo);
-        }
-    }
+    dispatcher.trigger('musicPlayer:play', {});
 };
 
 //
 MusicPlayer.prototype.notifyMetadataListeners = function(metadata){
-    log('notifyMetadataListeners');
-    for(var i=0; i < this.onMetadataListeners.length; ++i){
-        var listener = this.onMetadataListeners[i];
-        if(typeof listener === 'function'){
-            listener(metadata);
-        }
-    }
+
+    dispatcher.trigger('musicPlayer:metadata', metadata);
 };
 MusicPlayer.prototype.notifyStopListeners = function(){
-    log('notifyStopListeners');
-    for(var i=0; i < this.onStopListeners.length; ++i){
-        var listener = this.onStopListeners[i];
-        if(typeof listener === 'function'){
-            listener(this.currentSongInfo);
-        }
-    }
+    dispatcher.trigger('musicPlayer:stop', {});
 };
 
 //will only fire once a second
@@ -205,13 +190,7 @@ MusicPlayer.prototype.notifyTimeUpdateListeners = function(){
             progressPercent: Math.floor((100 / this.currentSong.duration) * this.currentSong.currentTime)          //duration is infinity on iphone5. http://stackoverflow.com/questions/9629223/audio-duration-returns-infinity-on-safari-when-mp3-is-served-from-php
         };
 
-        for(var i=0; i < this.onTimeUpdateListeners.length; ++i){
-            //log('notifying onTimeUpdateListeners');
-            var listener = this.onTimeUpdateListeners[i];
-            if(typeof listener === 'function'){
-                listener(data);
-            }
-        }
+        dispatcher.trigger('musicPlayer:timeUpdate', data);
     }catch(exception){
         alert('error notifying time updates: ' + exception);
     }
@@ -221,15 +200,8 @@ MusicPlayer.prototype.notifyTimeUpdateListeners = function(){
 MusicPlayer.prototype.notifyProgressListeners = function(data){
     //alert('progress');
     log('notifyProgressListeners');
-    this.notifyListeners(this.onProgressListeners);
+    dispatcher.trigger('musicPlayer:progress', data);
 };
-MusicPlayer.prototype.notifyListeners = function(listeners){
-    for(var i=0; i < listeners.length; ++i){
-        var listener = listeners[i];
-        if(typeof listener === 'function'){
-            listener(); //todo, pass song info
-        }
-    }
-};
+
 
 module.exports = new MusicPlayer();

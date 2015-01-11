@@ -1,12 +1,11 @@
 var $ = require('jquery');
 var React = require('react');
 var HomePage = require('pages/Home.react');
-var Signal = require('core/Signal');
 var ArtistsModel = require('model/Artists');
 
 function Home(){
     this.artistsModel = new ArtistsModel(viewModel.viewModel.artists);
-    this.signal = new Signal();
+
 }
 
 $.extend(Home.prototype, {
@@ -15,7 +14,7 @@ $.extend(Home.prototype, {
     },
     displayHomePage:function(){
         React.render(
-            <HomePage artistsModel = {this.artistsModel} signal={this.signal}/>,
+            <HomePage artistsModel = {this.artistsModel}/>,
             document.getElementById('pageContainer')
         );
     }
