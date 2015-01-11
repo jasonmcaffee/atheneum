@@ -1,8 +1,8 @@
-var $ = require('../vendor/jquery');
+var $ = require('jquery');
 var React = require('react');
-var HomePage = require('../pages/Home.react.js');
-var Signal = require('../core/Signal');
-var ArtistsModel = require('../model/Artists');
+var HomePage = require('pages/Home.react');
+var Signal = require('core/Signal');
+var ArtistsModel = require('model/Artists');
 
 function Home(){
     this.artistsModel = new ArtistsModel(viewModel.viewModel.artists);

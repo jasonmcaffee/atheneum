@@ -24,7 +24,7 @@
       <option name="program" value="/usr/local/bin/lessc" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="false" />
-      <option name="workingDir" value="$FileDir$" />
+      <option name="workingDir" value="/Volumes/fourtera_2012/experticity/core-fe/less" />
       <envs />
     </TaskOptions>
   </component>

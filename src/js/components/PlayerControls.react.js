@@ -1,6 +1,6 @@
 var React = require('react');
-var musicPlayer = require('../model/MusicPlayer.js');
-var V = require('../core/viewFactory');
+var musicPlayer = require('model/MusicPlayer');
+var V = require('core/viewFactory');
 var PlayerControls = V({
     signals:{
         "songPlayed":function(songInfo){

@@ -1,14 +1,19 @@
 .artists {
   color: blue;
 }
-.artist {
-  color: brown;
+.artist h2 {
+  font-size: 150%;
 }
 .album {
   color: #00B7FF;
+  padding-left: 2%;
+}
+.album h3 {
+  font-size: 120%;
 }
 .song {
   color: cornflowerblue;
+  padding-left: 2%;
 }
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)

@@ -1,4 +1,4 @@
-var ArtistsModel = require('./Artists.js');
+var ArtistsModel = require('model/Artists');
 var artistsModel = new ArtistsModel(viewModel.viewModel.artists);
 /**
  * API for playing and manipulating songs/music.

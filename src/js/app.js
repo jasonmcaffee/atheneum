@@ -1,6 +1,6 @@
 
-var fastButton = require('./core/FastButton');
-var homeController = require('./controllers/Home');
+var fastButton = require('core/FastButton');
+var homeController = require('controllers/Home');
 
 
 fastButton.init();

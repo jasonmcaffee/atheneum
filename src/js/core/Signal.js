@@ -1,4 +1,4 @@
-var $ = require('../vendor/jquery');
+var $ = require('jquery');
 var Signal = function() {
     console.log('Signal constructor called');
     this.init();

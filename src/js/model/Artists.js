@@ -1,4 +1,4 @@
-var $ = require('../vendor/jquery');
+var $ = require('jquery');
 
 function ArtistsModel(artists){
     this.artists = artists;

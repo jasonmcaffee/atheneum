@@ -1,4 +1,4 @@
-var $ = require('../vendor/jquery');
+var $ = require('jquery');
 
 //http://forum.jquery.com/topic/how-to-remove-the-300ms-delay-when-clicking-on-a-link-in-jquery-mobile
 //======================================================== FASTCLICK

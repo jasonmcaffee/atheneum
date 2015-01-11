@@ -1,7 +1,7 @@
 var React = require('react');
-var ArtistsTable = require('../components/ArtistTable.react');
-var PlayerControls = require('../components/PlayerControls.react');
-var V = require('../core/viewFactory');
+var ArtistsTable = require('components/ArtistTable.react');
+var PlayerControls = require('components/PlayerControls.react');
+var V = require('core/viewFactory');
 
 var Home = V({
 
