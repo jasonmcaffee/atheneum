@@ -55,72 +55,52 @@ router.get('/getSong', function(request, response){
 
         var range = req.headers.range;
         try{
-          var end;
+          var end, ini, byteRanges;
           if(range){
-            var byteRanges = range.replace(/bytes=/, '').split('-');
-            var ini = parseInt(byteRanges[0], 10);
+            byteRanges = range.replace(/bytes=/, '').split('-');
+            ini = parseInt(byteRanges[0], 10);
             end = parseInt(byteRanges[1], 10);
             console.log('end is :' + end);
+          }else{
+            ini = 0;
+            byteRanges = [0];
           }
 
           //https://groups.google.com/forum/#!msg/jplayer/nSM2UmnSKKA/bC-l3k0pCPMJ
-
           //https://groups.google.com/forum/?fromgroups=#!topic/nodejs/gzng3IJcBX8
           //if the range was requested, caclulate appropriate byte range
           //set response status to 206
-          if(!isNaN(end)){//iphone & ipad
-            var byteRanges = range.replace(/bytes=/, '').split('-');
-            var ini = parseInt(byteRanges[0], 10);
-            var end = parseInt(byteRanges[1], 10);
-            // if(isNaN(end)){ //chrome doesn't send 0-X, sometimes just 0-
-            //     end = musicItem.size;
-            // }
-            console.log('byteranges: ' + JSON.stringify(byteRanges));
-            console.log('ini: ' + ini);
-            console.log('end: ' + end);
-
-            var total = end - ini + 1;
-
-            console.log('total is: ' + total);
-
-            var contentRangeString = 'bytes '+ ini + '-'+ end +'/' + musicItem.size;
-            console.log('contentRangeString is: ' + contentRangeString);
-
-            //var data = fs.readFileSync(musicItem.fullPath);
-            res.writeHead(206,{
-              'Content-Type':'audio/mpeg',
-              'Content-Length':total,
-              //'Content-Length':data.length,
-              'Content-Range': contentRangeString,
-              'Accept-Ranges': 'bytes',
-              'X-Pad':'avoid browser bug',
-              'Cache-Control': 'public, must-revalidate, max-age:0',
-              'Content-Transfer-Encoding':'binary',
-              'Pragma':'no-cache',
-              'Content-Disposition': 'inline; filename="/getSong?songId=' + songId + '"'
-            });
-
-            //res.end(data);
-            var stream = fs.createReadStream(musicItem.fullPath, { start: ini, end: end })
-              .on("open", function() {
-                stream.pipe(res);
-              }).on("error", function(err) {
-                res.end(err);
-              });
-
-          }else{ //chrome
-            console.log('chrome way...');
-
-            //just write out the whole file.
-            var data = fs.readFileSync(musicItem.fullPath);
-
-            res.writeHead(200,{
-              'Content-Type':'audio/mpeg',
-              'Content-Length': data.length,
-              'Content-Disposition': 'inline; filename="/getSong?songId=' + songId + '"'
-            });
-            res.end(data);
+          if(isNaN(end)) {
+            end = musicItem.size -1;
           }
+
+          console.log('ini: %s,  end: %s,  byteranges: %s' , ini, end, JSON.stringify(byteRanges));
+
+          var total = end - ini + 1;
+          console.log('total is: ' + total);
+
+          var contentRangeString = 'bytes '+ ini + '-'+ end +'/' + musicItem.size;
+          console.log('contentRangeString is: ' + contentRangeString);
+
+          res.writeHead(206,{
+            'Content-Type':'audio/mpeg',
+            'Content-Length':total,
+            //'Content-Length':data.length,
+            'Content-Range': contentRangeString,
+            'Accept-Ranges': 'bytes',
+            'X-Pad':'avoid browser bug',
+            'Cache-Control': 'public, must-revalidate, max-age:0',
+            'Content-Transfer-Encoding':'binary',
+            'Pragma':'no-cache',
+            'Content-Disposition': 'inline; filename="/getSong?songId=' + songId + '"'
+          });
+
+          var stream = fs.createReadStream(musicItem.fullPath, { start: ini, end: end })
+            .on("open", function() {
+              stream.pipe(res);
+            }).on("error", function(err) {
+              res.end(err);
+            });
 
         }catch(ex){
           console.log('music server exception: ' + ex);

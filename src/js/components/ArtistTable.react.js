@@ -79,7 +79,8 @@ define(['react', 'core/viewFactory', 'model/MusicPlayer', 'core/dispatcher'], fu
                 var albumRow = this.createAlbumRow(album, albumName);
                 rows.push(albumRow);
             }
-            return rows;
+            var rowsDiv = <div className="albums">{rows}</div>;
+            return rowsDiv;
         },
 
         /**

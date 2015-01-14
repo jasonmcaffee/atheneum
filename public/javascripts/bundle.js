@@ -44,7 +44,8 @@ var ArtistTable = V({
                 var albumRow = this.createAlbumRow(album, albumName);
                 rows.push(albumRow);
             }
-            return rows;
+            var rowsDiv = React.createElement('div', { className: 'albums' }, rows);
+            return rowsDiv;
         },
         createAlbumRow: function (album, albumName) {
             var songRows = null;
@@ -92,9 +93,14 @@ var PlayerControls = V({
     render:function(){
         var currentSong = musicPlayer.currentSongInfo;
         var currentSongInfo = null;
+        if(this.playOrPause == undefined){
+            this.playOrPause = "icon-play";
+        }
+        var playButton = React.createElement("li", {className: this.playOrPause});
+
         if(currentSong){
             currentSongInfo =
-            React.createElement("div", {className: "current-song-info"}, 
+            React.createElement("marquee", {behavior: "scroll", direction: "left", className: "current-song-info"}, 
                 React.createElement("ul", null, 
                     React.createElement("li", null, currentSong.artistName), 
                     React.createElement("li", null, currentSong.albumName), 
@@ -104,10 +110,10 @@ var PlayerControls = V({
         }
         return (
             React.createElement("div", {className: "player-controls"}, 
-                React.createElement("ul", null, 
-                    React.createElement("li", {onClick: this.handlePlayClick}, "Play/Pause"), 
-                    React.createElement("li", {onClick: this.handlePreviousClick}, "Previous"), 
-                    React.createElement("li", {onClick: this.handleNextClick}, "Next")
+                React.createElement("ul", {className: "buttons"}, 
+                    React.createElement("li", {onClick: this.handlePlayClick}, playButton), 
+                    React.createElement("li", {onClick: this.handlePreviousClick}, React.createElement("li", {className: "icon-angle-circled-left"})), 
+                    React.createElement("li", {onClick: this.handleNextClick}, React.createElement("li", {className: "icon-angle-circled-right"}))
                 ), 
                 currentSongInfo
             )
@@ -116,8 +122,10 @@ var PlayerControls = V({
     handlePlayClick:function(){
         if(musicPlayer.isSongCurrentlyPlaying){
             musicPlayer.stopSong();
+            this.playOrPause = "icon-play";
         } else{
             musicPlayer.unPauseSong();
+            this.playOrPause = "icon-pause";
         }
         this.forceUpdate();
     },
@@ -634,6 +642,7 @@ var Home = V({
      * @return {object}
      */
     render: function() {
+
         return (
             React.createElement("div", null, 
                 React.createElement("header", {id: "header"}, 

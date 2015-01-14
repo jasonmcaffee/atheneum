@@ -10,22 +10,27 @@ var PlayerControls = V({
     render:function(){
         var currentSong = musicPlayer.currentSongInfo;
         var currentSongInfo = null;
+        if(this.playOrPause == undefined){
+            this.playOrPause = "icon-play";
+        }
+        var playButton = <li className={this.playOrPause}/>;
+
         if(currentSong){
             currentSongInfo =
-            <div className="current-song-info">
+            <marquee behavior="scroll" direction="left" className="current-song-info">
                 <ul>
                     <li>{currentSong.artistName}</li>
                     <li>{currentSong.albumName}</li>
                     <li>{currentSong.songName}</li>
                 </ul>
-            </div>;
+            </marquee>;
         }
         return (
             <div className="player-controls">
-                <ul>
-                    <li onClick={this.handlePlayClick}>Play/Pause</li>
-                    <li onClick={this.handlePreviousClick}>Previous</li>
-                    <li onClick={this.handleNextClick}>Next</li>
+                <ul className="buttons">
+                    <li onClick={this.handlePlayClick}>{playButton}</li>
+                    <li onClick={this.handlePreviousClick}><li className="icon-angle-circled-left"/></li>
+                    <li onClick={this.handleNextClick}><li className="icon-angle-circled-right"/></li>
                 </ul>
                 {currentSongInfo}
             </div>
@@ -34,8 +39,10 @@ var PlayerControls = V({
     handlePlayClick:function(){
         if(musicPlayer.isSongCurrentlyPlaying){
             musicPlayer.stopSong();
+            this.playOrPause = "icon-play";
         } else{
             musicPlayer.unPauseSong();
+            this.playOrPause = "icon-pause";
         }
         this.forceUpdate();
     },

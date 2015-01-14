@@ -1,19 +1,56 @@
 .artists {
-  color: blue;
+  color: white;
+  height: 140%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 .artist h2 {
   font-size: 150%;
 }
-.album {
-  color: #00B7FF;
+@media only screen and (max-width: 989px) {
+  .artist h2 {
+    font-size: 180%;
+  }
+}
+.albums {
+  background: -moz-linear-gradient(top, rgba(244, 244, 244, 0.1) 0%, rgba(200, 207, 209, 0.1) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(244, 244, 244, 0.1)), color-stop(100%, rgba(200, 207, 209, 0.1)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(244, 244, 244, 0.1) 0%, rgba(200, 207, 209, 0.1) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(244, 244, 244, 0.1) 0%, rgba(200, 207, 209, 0.1) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(244, 244, 244, 0.1) 0%, rgba(200, 207, 209, 0.1) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(244, 244, 244, 0.1) 0%, rgba(200, 207, 209, 0.1) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1af4f4f4', endColorstr='#1ac8cfd1', GradientType=0);
+  /* IE6-9 */
   padding-left: 2%;
+}
+.album {
+  color: floralwhite;
 }
 .album h3 {
   font-size: 120%;
 }
+@media only screen and (max-width: 989px) {
+  .album h3 {
+    font-size: 160%;
+  }
+}
 .song {
-  color: cornflowerblue;
+  color: azure;
   padding-left: 2%;
+}
+@media only screen and (max-width: 989px) {
+  .song {
+    font-size: 140%;
+  }
 }
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
@@ -146,20 +183,208 @@ table {
 * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
   box-sizing: border-box;
+  /* Opera/IE 8+  */
 }
 ul {
   list-style: none;
 }
 .player-controls {
-  background-color: #00B7FF;
+  background: -moz-linear-gradient(top, rgba(36, 120, 229, 0.2) 0%, rgba(51, 162, 247, 0.1) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(36, 120, 229, 0.2)), color-stop(100%, rgba(51, 162, 247, 0.1)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(36, 120, 229, 0.2) 0%, rgba(51, 162, 247, 0.1) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(36, 120, 229, 0.2) 0%, rgba(51, 162, 247, 0.1) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(36, 120, 229, 0.2) 0%, rgba(51, 162, 247, 0.1) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(36, 120, 229, 0.2) 0%, rgba(51, 162, 247, 0.1) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#332478e5', endColorstr='#1a33a2f7', GradientType=0);
+  /* IE6-9 */
+  font-size: 180%;
 }
 .player-controls ul li {
   display: inline-block;
 }
+@font-face {
+  font-family: 'media';
+  src: url('../fonts/media.eot?71787100');
+  src: url('../fonts/media.eot?71787100#iefix') format('embedded-opentype'), url('../fonts/media.woff?71787100') format('woff'), url('../fonts/media.ttf?71787100') format('truetype'), url('../fonts/media.svg?71787100#media') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'media';
+    src: url('../font/media.svg?71787100#media') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "media";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.icon-stop:before {
+  content: '\e800';
+}
+/* '' */
+.icon-pause:before {
+  content: '\e801';
+}
+/* '' */
+.icon-to-end:before {
+  content: '\e802';
+}
+/* '' */
+.icon-to-end-alt:before {
+  content: '\e803';
+}
+/* '' */
+.icon-to-start:before {
+  content: '\e804';
+}
+/* '' */
+.icon-to-start-alt:before {
+  content: '\e805';
+}
+/* '' */
+.icon-fast-fw:before {
+  content: '\e806';
+}
+/* '' */
+.icon-fast-bw:before {
+  content: '\e807';
+}
+/* '' */
+.icon-play-circled2:before {
+  content: '\e808';
+}
+/* '' */
+.icon-play-circled:before {
+  content: '\e809';
+}
+/* '' */
+.icon-play:before {
+  content: '\e80a';
+}
+/* '' */
+.icon-angle-circled-right:before {
+  content: '\e80b';
+}
+/* '' */
+.icon-angle-circled-left:before {
+  content: '\e80c';
+}
+/* '' */
+.icon-exchange:before {
+  content: '\e80d';
+}
+/* '' */
+.icon-shuffle:before {
+  content: '\e80e';
+}
+/* '' */
+.icon-history:before {
+  content: '\e80f';
+}
+/* '' */
+.icon-cw:before {
+  content: '\e810';
+}
+/* '' */
+.icon-ccw:before {
+  content: '\e811';
+}
+/* '' */
+.icon-arrows-cw:before {
+  content: '\e812';
+}
+/* '' */
+.icon-sliders:before {
+  content: '\e813';
+}
+/* '' */
+.icon-wrench:before {
+  content: '\e814';
+}
+/* '' */
+.icon-cog-alt:before {
+  content: '\e815';
+}
+/* '' */
+.icon-cog:before {
+  content: '\e816';
+}
+/* '' */
+.icon-volume-up:before {
+  content: '\e817';
+}
+/* '' */
+.icon-volume-down:before {
+  content: '\e818';
+}
+/* '' */
+.icon-volume-off:before {
+  content: '\e819';
+}
+html {
+  height: 110%;
+  width: 100%;
+}
 body {
+  background: url('../images/bg5.jpg') no-repeat 50% 50% fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-family: 'Josefin Sans', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+@media only screen and (max-width: 989px) {
+  body {
+    padding: 3px;
+  }
+}
+#pageContainer {
+  height: 100%;
+}
+#pageContainer > div {
+  height: 100%;
 }
 a {
   color: #00B7FF;

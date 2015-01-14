@@ -1,22 +1,57 @@
+@import "../core/media-queries";
+
 .artists{
-  color:blue;
+  color:white;
+  height:140%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 .artist{
   h2{
     font-size: 150%;
+    .mq(medium, {
+      font-size: 180%;
+    });
   }
 }
 
-.album{
-  color: #00B7FF;
+.albums{
+  .white-transparent();
   padding-left: 2%;
+}
+.album{
+  color: floralwhite;
+
+
+
   h3{
     font-size: 120%;
-
+    .mq(medium, {
+      font-size: 160%;
+    })
   }
 }
 
 .song{
-  color: cornflowerblue;
+  color: azure;
   padding-left: 2%;
+
+  .mq(medium, {
+    font-size: 140%;
+  });
+}
+
+.white-transparent(){
+  background: -moz-linear-gradient(top,  rgba(244,244,244,0.1) 0%, rgba(200,207,209,0.1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(244,244,244,0.1)), color-stop(100%,rgba(200,207,209,0.1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(244,244,244,0.1) 0%,rgba(200,207,209,0.1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(244,244,244,0.1) 0%,rgba(200,207,209,0.1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(244,244,244,0.1) 0%,rgba(200,207,209,0.1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(244,244,244,0.1) 0%,rgba(200,207,209,0.1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1af4f4f4', endColorstr='#1ac8cfd1',GradientType=0 ); /* IE6-9 */
+
+
 }

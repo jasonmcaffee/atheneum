@@ -9,12 +9,13 @@ var Home = V({
      * @return {object}
      */
     render: function() {
+
         return (
             <div>
                 <header id="header">
-                    <PlayerControls signal={this.props.signal}/>
+                    <PlayerControls/>
                 </header>
-                <ArtistsTable artistsModel={this.props.artistsModel} signal={this.props.signal} />
+                <ArtistsTable artistsModel={this.props.artistsModel} />
             </div>
         );
     }

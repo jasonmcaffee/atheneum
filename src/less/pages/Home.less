@@ -1,12 +1,43 @@
 @import "../components/ArtistsTable";
 @import "../core/reset";
+@import "../core/media-queries";
 @import "../components/PlayerControls";
+@import "../core/fonts";
 
+html{
+  height:110%;
+  width:100%;
+}
 body {
+  .mq(medium, {
+    padding:3px;
+  });
+
+  background: url('../images/bg5.jpg') no-repeat 50% 50% fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size:20px;
+  font-family: 'Josefin Sans', sans-serif;
+
+  height:100%;
+  width:100%;
 }
 
+#pageContainer{
+  height: 100%;
+  > div{
+    height:100%;
+  }
+}
 a {
   color: #00B7FF;
+}
+
+*{
+
 }
