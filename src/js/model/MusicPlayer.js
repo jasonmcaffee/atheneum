@@ -165,8 +165,8 @@ MusicPlayer.prototype.notifyPlayListeners = function(){
 
 //
 MusicPlayer.prototype.notifyMetadataListeners = function(metadata){
-
     dispatcher.trigger('musicPlayer:metadata', metadata);
+    //console.log('metadata: ' + JSON.stringify(metadata));
 };
 MusicPlayer.prototype.notifyStopListeners = function(){
     dispatcher.trigger('musicPlayer:stop', {});

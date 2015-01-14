@@ -85,7 +85,6 @@ router.get('/getSong', function(request, response){
           res.writeHead(206,{
             'Content-Type':'audio/mpeg',
             'Content-Length':total,
-            //'Content-Length':data.length,
             'Content-Range': contentRangeString,
             'Accept-Ranges': 'bytes',
             'X-Pad':'avoid browser bug',

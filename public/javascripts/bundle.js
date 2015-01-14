@@ -87,7 +87,22 @@ var V = require('core/viewFactory');
 var PlayerControls = V({
     signals:{
         "musicPlayer:play":function(songInfo){
+            this.playOrPause = "icon-pause";
             this.forceUpdate();
+        },
+        "musicPlayer:metadata": function(metadata){
+            this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+            console.log('currentTime is: ' + this.currentTime);
+            this.forceUpdate();
+
+            if(this.secondCountInterval){
+                window.clearInterval(this.secondCountInterval);
+            }
+
+            this.secondCountInterval = window.setInterval(function(){
+                this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                this.forceUpdate();
+            }.bind(this), 1000);
         }
     },
     render:function(){
@@ -113,7 +128,8 @@ var PlayerControls = V({
                 React.createElement("ul", {className: "buttons"}, 
                     React.createElement("li", {onClick: this.handlePlayClick}, playButton), 
                     React.createElement("li", {onClick: this.handlePreviousClick}, React.createElement("li", {className: "icon-angle-circled-left"})), 
-                    React.createElement("li", {onClick: this.handleNextClick}, React.createElement("li", {className: "icon-angle-circled-right"}))
+                    React.createElement("li", {onClick: this.handleNextClick}, React.createElement("li", {className: "icon-angle-circled-right"})), 
+                    React.createElement("li", null, this.currentTime)
                 ), 
                 currentSongInfo
             )
@@ -590,8 +606,8 @@ MusicPlayer.prototype.notifyPlayListeners = function(){
 
 //
 MusicPlayer.prototype.notifyMetadataListeners = function(metadata){
-
     dispatcher.trigger('musicPlayer:metadata', metadata);
+    //console.log('metadata: ' + JSON.stringify(metadata));
 };
 MusicPlayer.prototype.notifyStopListeners = function(){
     dispatcher.trigger('musicPlayer:stop', {});

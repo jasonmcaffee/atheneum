@@ -4,7 +4,22 @@ var V = require('core/viewFactory');
 var PlayerControls = V({
     signals:{
         "musicPlayer:play":function(songInfo){
+            this.playOrPause = "icon-pause";
             this.forceUpdate();
+        },
+        "musicPlayer:metadata": function(metadata){
+            this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+            console.log('currentTime is: ' + this.currentTime);
+            this.forceUpdate();
+
+            if(this.secondCountInterval){
+                window.clearInterval(this.secondCountInterval);
+            }
+
+            this.secondCountInterval = window.setInterval(function(){
+                this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                this.forceUpdate();
+            }.bind(this), 1000);
         }
     },
     render:function(){
@@ -31,6 +46,7 @@ var PlayerControls = V({
                     <li onClick={this.handlePlayClick}>{playButton}</li>
                     <li onClick={this.handlePreviousClick}><li className="icon-angle-circled-left"/></li>
                     <li onClick={this.handleNextClick}><li className="icon-angle-circled-right"/></li>
+                    <li>{this.currentTime}</li>
                 </ul>
                 {currentSongInfo}
             </div>
