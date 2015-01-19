@@ -101,7 +101,7 @@ var PlayerControls = V({
 
             this.secondCountInterval = window.setInterval(function(){
                 //todo: chill out when paused.
-                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                this.currentTimeDisplayString = musicPlayer.getCurrentTime() + " : " + musicPlayer.getDuration(); //Math.ceil(musicPlayer.currentSong.currentTime)
                 this.forceUpdate();
             }.bind(this), 1000);
         },
@@ -582,7 +582,10 @@ MusicPlayer.prototype.playPreviousSong = function(){
  */
 MusicPlayer.prototype.getCurrentTime = function(){
     if(!this.currentSong || isNaN(this.currentSong.currentTime)){return;}
-
+    var totalSeconds = this.currentSong.currentTime;
+    var minutes = Math.floor(totalSeconds /  60);
+    var remainingSeconds = Math.ceil(totalSeconds % 60);
+    return minutes + ":" + remainingSeconds;
 };
 
 /**

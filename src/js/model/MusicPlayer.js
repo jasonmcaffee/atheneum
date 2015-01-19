@@ -107,7 +107,10 @@ MusicPlayer.prototype.playPreviousSong = function(){
  */
 MusicPlayer.prototype.getCurrentTime = function(){
     if(!this.currentSong || isNaN(this.currentSong.currentTime)){return;}
-
+    var totalSeconds = this.currentSong.currentTime;
+    var minutes = Math.floor(totalSeconds /  60);
+    var remainingSeconds = Math.ceil(totalSeconds % 60);
+    return minutes + ":" + remainingSeconds;
 };
 
 /**

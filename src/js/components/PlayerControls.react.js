@@ -18,7 +18,7 @@ var PlayerControls = V({
 
             this.secondCountInterval = window.setInterval(function(){
                 //todo: chill out when paused.
-                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                this.currentTimeDisplayString = musicPlayer.getCurrentTime() + " : " + musicPlayer.getDuration(); //Math.ceil(musicPlayer.currentSong.currentTime)
                 this.forceUpdate();
             }.bind(this), 1000);
         },
