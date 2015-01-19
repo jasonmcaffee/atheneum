@@ -12,15 +12,15 @@ var PlayerControls = V({
             console.log('currentTimeDisplayString is: ' + this.currentTimeDisplayString);
             this.forceUpdate();
 
-            if(this.secondCountInterval){
-                window.clearInterval(this.secondCountInterval);
-            }
-
-            this.secondCountInterval = window.setInterval(function(){
-                //todo: chill out when paused.
-                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
-                this.forceUpdate();
-            }.bind(this), 1000);
+            //if(this.secondCountInterval){
+            //    window.clearInterval(this.secondCountInterval);
+            //}
+            //
+            //this.secondCountInterval = window.setInterval(function(){
+            //    //todo: chill out when paused.
+            //    this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+            //    this.forceUpdate();
+            //}.bind(this), 1000);
         },
         "musicPlayer:timeUpdate":function(data){
             console.log('onTimeUpdate with percentage: ' + data.progressPercent);
@@ -57,7 +57,7 @@ var PlayerControls = V({
                     <li onClick={this.handlePlayClick}>{playButton}</li>
                     <li onClick={this.handlePreviousClick}><li className="icon-angle-circled-left"/></li>
                     <li onClick={this.handleNextClick}><li className="icon-angle-circled-right"/></li>
-                    <li><input type="range" min="0" max="100" value={this.props.songTimeProgressPercent} onClick={this.handleRangeClick} onTouchEnd={this.handleRangeClick}/></li>
+                    <li><input type="range" min="0" max="100" value={this.props.songTimeProgressPercent} onClick={this.handleRangeClick} onTouchEnd={this.handleRangeClick} onChange={this.handleRangeChange}/></li>
                     <li>{this.currentTimeDisplayString}</li>
                 </ul>
                 {currentSongInfo}
@@ -66,7 +66,7 @@ var PlayerControls = V({
     },
     handleRangeClick:function(e){
         //step="1"  value={this.songTimeProgressPercent}
-        console.log('new range value:' + e.target.value);
+        console.log('========new range value:' + e.target.value);
         var rangeVal = parseInt(e.target.value);
         if(isNaN(rangeVal)){
             console.error('no range value');
@@ -74,9 +74,11 @@ var PlayerControls = V({
         }
 
     },
-    //handleRangeChange:function(e){
-    //    console.log('range change: ' + e.target.value);
-    //},
+    handleRangeChange:function(e){
+        console.log('range change: ' + e.target.value);
+        this.props.songTimeProgressPercent = e.target.value;
+        this.forceUpdate();
+    },
     handlePlayClick:function(){
         if(musicPlayer.isSongCurrentlyPlaying){
             musicPlayer.stopSong();
