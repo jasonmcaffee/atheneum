@@ -102,9 +102,13 @@ MusicPlayer.prototype.playPreviousSong = function(){
 
 };
 
+/**
+ * Formatted current time.
+ */
 MusicPlayer.prototype.getCurrentTime = function(){
+    if(!this.currentSong || isNaN(this.currentSong.currentTime)){return;}
 
-}
+};
 
 /**
  * Event handlers    ==============================================================================================
@@ -125,6 +129,18 @@ MusicPlayer.prototype.handleSongEnd = function(){
     this.playSong(++this.currentSongId);
 };
 
+/**
+ *
+ * @param positionPercentage - eg. 75 would be 75% and it would move a 2 minute song to the 1:30 marker.
+ */
+MusicPlayer.prototype.setCurrentTimeViaPercentage = function(positionPercentage){
+    var total = this.currentSong.duration;
+    if(isNaN(total) || !this.currentSong){return;}
+    positionPercentage = positionPercentage / 100;
+    var newTime = total * positionPercentage;
+    if(isNaN(newTime)){console.error('bad time');return;};
+    this.currentSong.currentTime = newTime;
+};
 
 
 //returns in hours:minutes string
@@ -139,29 +155,6 @@ MusicPlayer.prototype.getDuration = function(){
     return displayMinutes + ':' + displaySeconds;
 };
 
-///**
-// * Register observers
-// * @param playCallback
-// */
-//MusicPlayer.prototype.onPlay = function(playCallback) {
-//    this.onPlayListeners.push(playCallback);
-//
-//};
-//MusicPlayer.prototype.onStop = function(stopCallback) {
-//    this.onStopListeners.push(stopCallback);
-//};
-//
-//MusicPlayer.prototype.onMetadata = function(callback){
-//    this.onMetadataListeners.push(callback);
-//};
-//
-//MusicPlayer.prototype.onProgress = function(callback){
-//    this.onProgressListeners.push(callback);
-//};
-//
-//MusicPlayer.prototype.onTimeUpdate = function(callback){
-//    this.onTimeUpdateListeners.push(callback);
-//};
 
 MusicPlayer.prototype.notifyPlayListeners = function(){
     dispatcher.trigger('musicPlayer:play', {});

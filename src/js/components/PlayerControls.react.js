@@ -12,15 +12,15 @@ var PlayerControls = V({
             console.log('currentTimeDisplayString is: ' + this.currentTimeDisplayString);
             this.forceUpdate();
 
-            //if(this.secondCountInterval){
-            //    window.clearInterval(this.secondCountInterval);
-            //}
-            //
-            //this.secondCountInterval = window.setInterval(function(){
-            //    //todo: chill out when paused.
-            //    this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
-            //    this.forceUpdate();
-            //}.bind(this), 1000);
+            if(this.secondCountInterval){
+                window.clearInterval(this.secondCountInterval);
+            }
+
+            this.secondCountInterval = window.setInterval(function(){
+                //todo: chill out when paused.
+                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                this.forceUpdate();
+            }.bind(this), 1000);
         },
         "musicPlayer:timeUpdate":function(data){
             console.log('onTimeUpdate with percentage: ' + data.progressPercent);
@@ -72,8 +72,15 @@ var PlayerControls = V({
             console.error('no range value');
             return;
         }
+        musicPlayer.setCurrentTimeViaPercentage(rangeVal);
+        //only if there is a currentTime
+
 
     },
+    /**
+     * For some reason you cant update the range input without doing this every time it changes.
+     * @param e
+     */
     handleRangeChange:function(e){
         console.log('range change: ' + e.target.value);
         this.props.songTimeProgressPercent = e.target.value;
