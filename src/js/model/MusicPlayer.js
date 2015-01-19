@@ -71,7 +71,7 @@ MusicPlayer.prototype.playSong = function(songId){
 MusicPlayer.prototype.stopSong = function(){
     if(!this.currentSong){return false;}
     this.currentSong.pause();
-    //this.currentSong.currentTime = 0;   //doesn't work due to accept-range lacking on server
+    //this.currentSong.currentTimeDisplayString = 0;   //doesn't work due to accept-range lacking on server
     this.isSongCurrentlyPlaying = false;
     this.notifyStopListeners();
 };
@@ -101,6 +101,10 @@ MusicPlayer.prototype.playPreviousSong = function(){
     this.playSong(--this.currentSongId);
 
 };
+
+MusicPlayer.prototype.getCurrentTime = function(){
+
+}
 
 /**
  * Event handlers    ==============================================================================================
@@ -174,16 +178,16 @@ MusicPlayer.prototype.notifyStopListeners = function(){
 
 //will only fire once a second
 MusicPlayer.prototype.notifyTimeUpdateListeners = function(){
-
+    //console.log('time update');
     try{
-        //log(''+this.currentSong.currentTime);
+        //log(''+this.currentSong.currentTimeDisplayString);
         if(this.currentSong.lastTime){
-            if(this.currentSong.currentTime - 1 < this.currentSong.lastTime){
+            if(this.currentSong.currentTime- 1 < this.currentSong.lastTime){
                 //log('not notifying because a second hasnt passed');
                 return;
             }
         }
-        //log('notifying time update ' + this.currentSong.duration + ' currentTime' + this.currentSong.currentTime);
+        //log('notifying time update ' + this.currentSong.duration + ' currentTimeDisplayString' + this.currentSong.currentTimeDisplayString);
         this.currentSong.lastTime = this.currentSong.currentTime;
         var data = {
             currentTime : this.currentSong.currentTime,

@@ -8,8 +8,8 @@ var PlayerControls = V({
             this.forceUpdate();
         },
         "musicPlayer:metadata": function(metadata){
-            this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
-            console.log('currentTime is: ' + this.currentTime);
+            this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+            console.log('currentTimeDisplayString is: ' + this.currentTimeDisplayString);
             this.forceUpdate();
 
             if(this.secondCountInterval){
@@ -17,14 +17,25 @@ var PlayerControls = V({
             }
 
             this.secondCountInterval = window.setInterval(function(){
-                this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                //todo: chill out when paused.
+                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
                 this.forceUpdate();
             }.bind(this), 1000);
+        },
+        "musicPlayer:timeUpdate":function(data){
+            console.log('onTimeUpdate with percentage: ' + data.progressPercent);
+            this.props.songTimeProgressPercent = data.progressPercent;
+            this.forceUpdate();
         }
     },
     render:function(){
+        console.log('render');
         var currentSong = musicPlayer.currentSongInfo;
         var currentSongInfo = null;
+        if(!this.props.songTimeProgressPercent){
+            this.props.songTimeProgressPercent = 0;
+        }
+        console.log('songTimeProgressPercent' + this.props.songTimeProgressPercent);
         if(this.playOrPause == undefined){
             this.playOrPause = "icon-play";
         }
@@ -46,12 +57,26 @@ var PlayerControls = V({
                     <li onClick={this.handlePlayClick}>{playButton}</li>
                     <li onClick={this.handlePreviousClick}><li className="icon-angle-circled-left"/></li>
                     <li onClick={this.handleNextClick}><li className="icon-angle-circled-right"/></li>
-                    <li>{this.currentTime}</li>
+                    <li><input type="range" min="0" max="100" value={this.props.songTimeProgressPercent} onClick={this.handleRangeClick} onTouchEnd={this.handleRangeClick}/></li>
+                    <li>{this.currentTimeDisplayString}</li>
                 </ul>
                 {currentSongInfo}
             </div>
         )
     },
+    handleRangeClick:function(e){
+        //step="1"  value={this.songTimeProgressPercent}
+        console.log('new range value:' + e.target.value);
+        var rangeVal = parseInt(e.target.value);
+        if(isNaN(rangeVal)){
+            console.error('no range value');
+            return;
+        }
+
+    },
+    //handleRangeChange:function(e){
+    //    console.log('range change: ' + e.target.value);
+    //},
     handlePlayClick:function(){
         if(musicPlayer.isSongCurrentlyPlaying){
             musicPlayer.stopSong();

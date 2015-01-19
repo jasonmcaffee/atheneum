@@ -91,8 +91,8 @@ var PlayerControls = V({
             this.forceUpdate();
         },
         "musicPlayer:metadata": function(metadata){
-            this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
-            console.log('currentTime is: ' + this.currentTime);
+            this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+            console.log('currentTimeDisplayString is: ' + this.currentTimeDisplayString);
             this.forceUpdate();
 
             if(this.secondCountInterval){
@@ -100,14 +100,25 @@ var PlayerControls = V({
             }
 
             this.secondCountInterval = window.setInterval(function(){
-                this.currentTime = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
+                //todo: chill out when paused.
+                this.currentTimeDisplayString = Math.ceil(musicPlayer.currentSong.currentTime) + " : " + musicPlayer.getDuration();
                 this.forceUpdate();
             }.bind(this), 1000);
+        },
+        "musicPlayer:timeUpdate":function(data){
+            console.log('onTimeUpdate with percentage: ' + data.progressPercent);
+            this.props.songTimeProgressPercent = data.progressPercent;
+            this.forceUpdate();
         }
     },
     render:function(){
+        console.log('render');
         var currentSong = musicPlayer.currentSongInfo;
         var currentSongInfo = null;
+        if(!this.props.songTimeProgressPercent){
+            this.props.songTimeProgressPercent = 0;
+        }
+        console.log('songTimeProgressPercent' + this.props.songTimeProgressPercent);
         if(this.playOrPause == undefined){
             this.playOrPause = "icon-play";
         }
@@ -129,12 +140,26 @@ var PlayerControls = V({
                     React.createElement("li", {onClick: this.handlePlayClick}, playButton), 
                     React.createElement("li", {onClick: this.handlePreviousClick}, React.createElement("li", {className: "icon-angle-circled-left"})), 
                     React.createElement("li", {onClick: this.handleNextClick}, React.createElement("li", {className: "icon-angle-circled-right"})), 
-                    React.createElement("li", null, this.currentTime)
+                    React.createElement("li", null, React.createElement("input", {type: "range", min: "0", max: "100", value: this.props.songTimeProgressPercent, onClick: this.handleRangeClick, onTouchEnd: this.handleRangeClick})), 
+                    React.createElement("li", null, this.currentTimeDisplayString)
                 ), 
                 currentSongInfo
             )
         )
     },
+    handleRangeClick:function(e){
+        //step="1"  value={this.songTimeProgressPercent}
+        console.log('new range value:' + e.target.value);
+        var rangeVal = parseInt(e.target.value);
+        if(isNaN(rangeVal)){
+            console.error('no range value');
+            return;
+        }
+
+    },
+    //handleRangeChange:function(e){
+    //    console.log('range change: ' + e.target.value);
+    //},
     handlePlayClick:function(){
         if(musicPlayer.isSongCurrentlyPlaying){
             musicPlayer.stopSong();
@@ -512,7 +537,7 @@ MusicPlayer.prototype.playSong = function(songId){
 MusicPlayer.prototype.stopSong = function(){
     if(!this.currentSong){return false;}
     this.currentSong.pause();
-    //this.currentSong.currentTime = 0;   //doesn't work due to accept-range lacking on server
+    //this.currentSong.currentTimeDisplayString = 0;   //doesn't work due to accept-range lacking on server
     this.isSongCurrentlyPlaying = false;
     this.notifyStopListeners();
 };
@@ -542,6 +567,10 @@ MusicPlayer.prototype.playPreviousSong = function(){
     this.playSong(--this.currentSongId);
 
 };
+
+MusicPlayer.prototype.getCurrentTime = function(){
+
+}
 
 /**
  * Event handlers    ==============================================================================================
@@ -615,16 +644,16 @@ MusicPlayer.prototype.notifyStopListeners = function(){
 
 //will only fire once a second
 MusicPlayer.prototype.notifyTimeUpdateListeners = function(){
-
+    //console.log('time update');
     try{
-        //log(''+this.currentSong.currentTime);
+        //log(''+this.currentSong.currentTimeDisplayString);
         if(this.currentSong.lastTime){
-            if(this.currentSong.currentTime - 1 < this.currentSong.lastTime){
+            if(this.currentSong.currentTime- 1 < this.currentSong.lastTime){
                 //log('not notifying because a second hasnt passed');
                 return;
             }
         }
-        //log('notifying time update ' + this.currentSong.duration + ' currentTime' + this.currentSong.currentTime);
+        //log('notifying time update ' + this.currentSong.duration + ' currentTimeDisplayString' + this.currentSong.currentTimeDisplayString);
         this.currentSong.lastTime = this.currentSong.currentTime;
         var data = {
             currentTime : this.currentSong.currentTime,
